@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "vfirst-state-file-bkt"
-    key    = "eks"
+    key    = "eks/terraform.tfstate"
     region = "us-east-1"
   }
 }
