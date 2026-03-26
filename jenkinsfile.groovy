@@ -35,7 +35,7 @@ pipeline {
                 dir('EKS') {
                     sh 'terraform plan'
                 }
-                input (message: 'Do you want to apply the changes?', ok: 'Apply')
+//             input (message: 'Do you want to apply the changes?', ok: 'Apply')
             }
         }
 
@@ -43,6 +43,16 @@ pipeline {
             steps {
                 dir('EKS') {
                     sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+        stage('Apply changes to EKS') {
+            steps {
+                dir('EKS/k8s-menifest-files') {
+                sh'''
+                    aws eks --region us-east-1 update-kubeconfig --name my-cluster
+                    sh 'kubectl apply -f .'
+                '''
                 }
             }
         }
