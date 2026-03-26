@@ -38,5 +38,13 @@ pipeline {
                 }
             }
         }
+
+        stage('Terraform apply') {
+            steps {
+                dir('EKS') {
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
 }
 }
