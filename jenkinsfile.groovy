@@ -18,7 +18,6 @@ pipeline {
             steps {
                 dir('EKS') {
                 sh '''
-                rm -rf .terraform .terraform.lock.hcl
                 terraform init
                 '''
                 }
@@ -36,6 +35,7 @@ pipeline {
                 dir('EKS') {
                     sh 'terraform plan'
                 }
+                input (message: 'Do you want to apply the changes?', ok: 'Apply')
             }
         }
 
